@@ -32,7 +32,7 @@ public class BehaviourConfigurerTest {
     private BehaviourConfigurer configurer;
 
     @Test
-    public void testPostProcessAfterInitialization() throws Exception {
+    public void shouldRegisterOnUpdateProperties() throws Exception {
         when(prefixResolver.getNamespaceURI(PREFIX)).thenReturn(NAMESPACE);
 
         configurer.postProcessAfterInitialization(new ClassPolicyForTest.UpdateProperties(), "updateProperties");
@@ -40,6 +40,21 @@ public class BehaviourConfigurerTest {
         verify(prefixResolver).getNamespaceURI(PREFIX);
         verify(policyComponent).bindClassBehaviour(
                 eq(QName.createQName(NamespaceService.ALFRESCO_URI, "onUpdateProperties")),
+                eq(QName.createQName(NAMESPACE, "content")),
+                Matchers.<org.alfresco.repo.policy.Behaviour>any());
+    }
+
+    @Test
+    public void shouldRegisterOnCreateNodeAndOnDeleteNode() throws Exception {
+
+        configurer.postProcessAfterInitialization(new ClassPolicyForTest.CreateDeleteNode(), "createDeleteNode");
+
+        verify(policyComponent).bindClassBehaviour(
+                eq(QName.createQName(NamespaceService.ALFRESCO_URI, "onCreateNode")),
+                eq(QName.createQName(NAMESPACE, "content")),
+                Matchers.<org.alfresco.repo.policy.Behaviour>any());
+        verify(policyComponent).bindClassBehaviour(
+                eq(QName.createQName(NamespaceService.ALFRESCO_URI, "onDeleteNode")),
                 eq(QName.createQName(NAMESPACE, "content")),
                 Matchers.<org.alfresco.repo.policy.Behaviour>any());
     }

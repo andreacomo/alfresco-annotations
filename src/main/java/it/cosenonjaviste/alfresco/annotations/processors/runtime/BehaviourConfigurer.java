@@ -13,6 +13,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <tt>BeanPostProcessor</tt> for {@link Behaviour} annotation.
@@ -42,14 +45,17 @@ public class BehaviourConfigurer implements BeanPostProcessor {
         if (bean instanceof ClassPolicy && bean.getClass().getAnnotation(Behaviour.class) != null) {
             Behaviour behaviorAnnotation = bean.getClass().getAnnotation(Behaviour.class);
 
-            Method method = discoverMethodEvent((ClassPolicy) bean);
-            org.alfresco.repo.policy.Behaviour behaviour = new JavaBehaviour(bean, method.getName(),
-                    behaviorAnnotation.frequency());
+            List<Method> methods = discoverEventsMethods((ClassPolicy) bean);
 
-            this.policyComponent.bindClassBehaviour(
-                    QName.createQName(NamespaceService.ALFRESCO_URI, method.getName()),
-                    asQName(behaviorAnnotation.type()),
-                    behaviour);
+            for (Method method : methods) {
+                org.alfresco.repo.policy.Behaviour behaviour = new JavaBehaviour(bean, method.getName(),
+                        behaviorAnnotation.frequency());
+
+                this.policyComponent.bindClassBehaviour(
+                        QName.createQName(NamespaceService.ALFRESCO_URI, method.getName()),
+                        asQName(behaviorAnnotation.type()),
+                        behaviour);
+            }
         }
 
         return bean;
@@ -65,13 +71,17 @@ public class BehaviourConfigurer implements BeanPostProcessor {
         }
     }
 
-    private Method discoverMethodEvent(ClassPolicy bean) {
-        Method[] methods = bean.getClass().getDeclaredMethods();
-        if (methods.length == 1) {
-            LOGGER.debug(String.format("Policy method '%s' will be registered", methods[0]));
-            return methods[0];
-        } else {
-            throw new ConfigurationAnnotationException("ClassPolicy child class should have just one method!");
+    private List<Method> discoverEventsMethods(ClassPolicy bean) {
+        List<Method> methods = new ArrayList<>();
+        Class<?>[] interfaces = bean.getClass().getInterfaces();
+        if (interfaces != null && interfaces.length > 0) {
+            for (Class<?> anInterface : interfaces) {
+                if (ClassPolicy.class.isAssignableFrom(anInterface)) {
+                    methods.addAll(Arrays.asList(anInterface.getDeclaredMethods()));
+                }
+            }
         }
+
+        return methods;
     }
 }
