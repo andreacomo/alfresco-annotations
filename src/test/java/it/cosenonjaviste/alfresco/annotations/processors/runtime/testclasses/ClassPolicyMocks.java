@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Andrea Como
  */
 
-public class ClassPolicyForTest {
+public class ClassPolicyMocks {
 
     public interface AnotherInternface {
 
