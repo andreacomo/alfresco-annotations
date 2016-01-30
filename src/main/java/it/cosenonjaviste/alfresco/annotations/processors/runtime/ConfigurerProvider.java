@@ -28,6 +28,11 @@ public class ConfigurerProvider {
     }
 
     @Bean
+    public static WebScriptConfigurer webScriptConfigurer() {
+        return new WebScriptConfigurer();
+    }
+
+    @Bean
     public JsExtensionConfigurer jsExtensionConfigurer() {
         return new JsExtensionConfigurer();
     }

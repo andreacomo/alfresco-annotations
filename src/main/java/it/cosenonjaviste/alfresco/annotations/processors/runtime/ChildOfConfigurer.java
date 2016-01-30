@@ -36,45 +36,24 @@ import org.springframework.util.StringUtils;
  *
  * @author Jan Esser
  */
-public class ChildOfConfigurer implements BeanFactoryPostProcessor, PriorityOrdered {
+public class ChildOfConfigurer extends AbstractPostProcessorConfigurer {
 
-    private static final Logger LOGGER = Logger.getLogger(ChildOfConfigurer.class);
 
-    private int order = Ordered.LOWEST_PRECEDENCE;// default: same as non-Ordered
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
-    public int getOrder() {
-        return this.order;
-    }
-
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        String[] beanDefinitionNames = beanFactory.getBeanDefinitionNames();
-        for (String definitionName : beanDefinitionNames) {
-            try {
-                final BeanDefinition bd = beanFactory.getBeanDefinition(definitionName);
-                final String beanClassName = bd.getBeanClassName();
-                if (StringUtils.hasText(beanClassName)) {
-                    try {
-                        final ChildOf childOf = AnnotationUtils.findAnnotation(Class.forName(beanClassName), ChildOf.class);
-                        if (childOf != null) {
-                            final String parentName = childOf.value();
-                            if (StringUtils.hasText(parentName)) {
-                                bd.setParentName(parentName);
-                            } else
-                                throw new FatalBeanException(String.format("%s is @ChildOf annotated, but no value set."));
-                        }
-                    } catch (ClassNotFoundException e) {
-                        LOGGER.error(e.getMessage(), e);
-                        throw new FatalBeanException("Unknown class defined.", e);
-                    }
+    @Override
+    protected void processBeanDefinition(ConfigurableListableBeanFactory beanFactory, BeanDefinition bd, String beanClassName, String definitionName) throws FatalBeanException {
+        try {
+            final ChildOf childOf = AnnotationUtils.findAnnotation(Class.forName(beanClassName), ChildOf.class);
+            if (childOf != null) {
+                final String parentName = childOf.value();
+                if (StringUtils.hasText(parentName)) {
+                    bd.setParentName(parentName);
+                } else {
+                    throw new FatalBeanException(String.format("%s is @ChildOf annotated, but no value set.", beanClassName));
                 }
-            } catch (NoSuchBeanDefinitionException ex) {
-                LOGGER.warn(ex.getMessage());
-                continue;
             }
+        } catch (ClassNotFoundException e) {
+            logger.error(e.getMessage(), e);
+            throw new FatalBeanException(e.getMessage(), e);
         }
     }
 }
