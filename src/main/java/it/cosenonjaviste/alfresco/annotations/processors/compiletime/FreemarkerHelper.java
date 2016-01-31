@@ -22,10 +22,10 @@ class FreemarkerHelper {
     private final Configuration configuration;
 
     private FreemarkerHelper() {
-        configuration = new Configuration(Configuration.getVersion());
+        configuration = new Configuration();
         configuration.setDefaultEncoding("UTF-8");
         configuration
-                .setTemplateLoader(new ClassTemplateLoader(this.getClass().getClassLoader(), "META-INF/templates"));
+                .setTemplateLoader(new ClassTemplateLoader(this.getClass(), "/META-INF/templates"));
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
