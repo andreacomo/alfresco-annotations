@@ -22,14 +22,15 @@ import java.util.List;
 public @interface ModuleComponent {
 
     /**
-     * The globally unique module name. Usually set to <tt>artifactId</tt> value
+     * The globally unique module name. MUST be set to <strong>module name</strong>
+     * (<tt>module.id</tt> parameter from <tt>module.properties</tt>), usually <tt>artifactId</tt> in Maven projects
      *
      * @return module identifier
      */
     String moduleId();
 
     /**
-     * Component name
+     * Component bean name
      *
      * @return component name
      */
