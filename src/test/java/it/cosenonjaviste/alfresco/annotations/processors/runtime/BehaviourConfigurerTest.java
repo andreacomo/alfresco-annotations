@@ -1,6 +1,6 @@
 package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 
-import it.cosenonjaviste.alfresco.annotations.processors.runtime.testclasses.ClassPolicyForTest;
+import it.cosenonjaviste.alfresco.annotations.processors.runtime.testclasses.ClassPolicyMocks;
 import org.alfresco.repo.policy.PolicyComponent;
 import org.alfresco.service.namespace.NamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
@@ -35,7 +35,7 @@ public class BehaviourConfigurerTest {
     public void shouldRegisterOnUpdateProperties() throws Exception {
         when(prefixResolver.getNamespaceURI(PREFIX)).thenReturn(NAMESPACE);
 
-        configurer.postProcessAfterInitialization(new ClassPolicyForTest.UpdateProperties(), "updateProperties");
+        configurer.postProcessAfterInitialization(new ClassPolicyMocks.UpdateProperties(), "updateProperties");
 
         verify(prefixResolver).getNamespaceURI(PREFIX);
         verify(policyComponent).bindClassBehaviour(
@@ -47,7 +47,7 @@ public class BehaviourConfigurerTest {
     @Test
     public void shouldRegisterOnCreateNodeAndOnDeleteNode() throws Exception {
 
-        configurer.postProcessAfterInitialization(new ClassPolicyForTest.CreateDeleteNode(), "createDeleteNode");
+        configurer.postProcessAfterInitialization(new ClassPolicyMocks.CreateDeleteNode(), "createDeleteNode");
 
         verify(policyComponent).bindClassBehaviour(
                 eq(QName.createQName(NamespaceService.ALFRESCO_URI, "onCreateNode")),
