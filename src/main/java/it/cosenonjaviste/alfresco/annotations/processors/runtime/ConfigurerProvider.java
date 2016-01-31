@@ -41,4 +41,9 @@ public class ConfigurerProvider {
     public BehaviourConfigurer behaviourConfigurer() {
         return new BehaviourConfigurer(policyComponent, namespacePrefixResolver);
     }
+
+    @Bean
+    public ModuleComponentConfigurer moduleComponentConfigurer() {
+        return new ModuleComponentConfigurer();
+    }
 }
