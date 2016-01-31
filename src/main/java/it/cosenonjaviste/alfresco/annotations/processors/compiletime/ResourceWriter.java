@@ -26,7 +26,7 @@ abstract class ResourceWriter<T extends Annotation> {
 
     public void generateResourceFile(final T annotation, final String name, final String path) {
         try {
-            FileObject resource = processingEnv.getFiler().createResource(StandardLocation.CLASS_OUTPUT, path, name);
+            FileObject resource = processingEnv.getFiler().createResource(StandardLocation.SOURCE_OUTPUT, path, name);
             try (Writer writer = resource.openWriter()) {
 
                 doWrite(annotation, writer);

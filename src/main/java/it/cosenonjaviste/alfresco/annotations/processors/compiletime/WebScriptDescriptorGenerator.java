@@ -15,7 +15,7 @@ import java.util.Set;
  * @author Andrea Como
  */
 @SupportedAnnotationTypes("it.cosenonjaviste.alfresco.annotations.WebScriptDescriptor")
-@SupportedSourceVersion(SourceVersion.RELEASE_7)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class WebScriptDescriptorGenerator extends AbstractProcessor {
 
     private ProcessLog log;
@@ -41,27 +41,34 @@ public class WebScriptDescriptorGenerator extends AbstractProcessor {
             }
             return true;
         } catch (Exception e) {
-            log.error("Errore durante la generazione del descrittore", e);
+            log.error("Error during descriptor generation. " + e.getMessage(), e);
             throw new WebScriptDescriptorGeneratorException(e);
         }
     }
 
     private void createResource(TypeElement classElement) {
         WebScript webScriptAnnotation = classElement.getAnnotation(WebScript.class);
-        String value = webScriptAnnotation.value();
-        //String path = extractWebScriptPath(value);
-
         WebScriptDescriptor descriptor = classElement.getAnnotation(WebScriptDescriptor.class);
-        //this.resourceWriter.generateResourceFile(descriptor, );
+
+        String name = extractWebScriptName(webScriptAnnotation.value());
+        String path = extractWebScriptPath(webScriptAnnotation.value());
+        String descName = name + "." + webScriptAnnotation.method().toString().toLowerCase() + ".desc.xml";
+        this.resourceWriter.generateResourceFile(descriptor, descName, path);
     }
 
-    /**
-     * Extract path and name. Ex: <tt>webscript.it.cnj.hello.get</tt> => <tt>it.cnj.hello</tt>
-     *
-     * @param value webscript name
-     * @return      path and name extracted from name
-     */
-    private String extractWebScriptPathAndName(String value) {
-        return value.substring(value.indexOf("."), value.lastIndexOf("."));
+    private String extractWebScriptPath(String value) {
+        if (value.contains(".")) {
+            return value.substring(0, value.lastIndexOf("."));
+        } else {
+            return "";
+        }
+    }
+
+    private String extractWebScriptName(String value) {
+        if (value.contains(".")) {
+            return value.substring(value.lastIndexOf(".") + 1, value.length());
+        } else {
+            return value;
+        }
     }
 }
