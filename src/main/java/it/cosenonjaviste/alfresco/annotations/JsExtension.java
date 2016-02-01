@@ -20,6 +20,11 @@ import java.lang.annotation.*;
 @DependsOn("javaScriptProcessor")
 public @interface JsExtension {
 
+    /**
+     * Bean name and extension name
+     *
+     * @return bean name and extension name
+     */
     String value();
 
 }

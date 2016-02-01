@@ -18,6 +18,11 @@ import java.lang.annotation.*;
 @ChildOf("action-executer")
 public @interface ActionExecuter {
 
+    /**
+     * Bean name
+     *
+     * @return bean name
+     */
     String value();
 
 }

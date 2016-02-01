@@ -48,7 +48,7 @@ just set *where to write them* on *Maven Compiler Plugin*, such as:
 
 ## Annotations
 
-Each annotation's javadoc helps you to remember which class you sould or must extend, what annotation attributes you must provide and what are default values
+Each annotation's javadoc helps you to remember which class you should or must extend, what annotation attributes you must provide and what are default values
 
 * [@ActionExecuter](#actionexecuter)
 * [@Behaviour](#behaviour)
@@ -58,7 +58,7 @@ Each annotation's javadoc helps you to remember which class you sould or must ex
  * [@WebScriptDescriptor](#webscriptdescriptor)
  
 ### @ActionExecuter
-Creates a new **Java Action** is pretty easy: just annotate your bean with ```@ActionExecuter```, name it and don't forget to extends ```ActionExecuterAbstractBase``` as annotation's javadoc says! (But forget bean parent name... this annotation will take care of it)
+Creating a new **Java Action** is pretty easy: just annotate your bean with ```@ActionExecuter```, name it and don't forget to extends ```ActionExecuterAbstractBase``` as annotation's javadoc says! (But forget bean parent name... this annotation will take care of it)
 
 ```java
 @ActionExecuter("myAction")
@@ -128,7 +128,7 @@ public class HelloComponent extends AbstractModuleComponent {
 }
 ```
 
-Take care on ```moduleId```: it *must correspond* to your **module ID**, defined by *module.id* property in ```module.properties``` file.
+Take care of ```moduleId```: it *must correspond* to your **module ID**, defined by *module.id* property in ```module.properties``` file.
 
 ### @WebScript
 WebScript are the most used feature in Alfresco, allowing access to repository feature in a RESTful way. Remembering Java-backed WebScript controller naming convention is pretty boring. I'd like to set a bean name and an HTTP method to define a new WebScript such as:

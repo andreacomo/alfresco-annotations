@@ -22,6 +22,11 @@ import org.alfresco.repo.policy.Behaviour.NotificationFrequency;
 @Component
 public @interface Behaviour {
 
+    /**
+     * Bean name
+     *
+     * @return bean name
+     */
     String value();
 
     /**
@@ -31,6 +36,13 @@ public @interface Behaviour {
      */
     String type();
 
+    /**
+     * Defines when trigger this behaviour. Default is {@link NotificationFrequency#TRANSACTION_COMMIT}
+     *
+     * @see NotificationFrequency
+     *
+     * @return notification frequency
+     */
     NotificationFrequency frequency() default NotificationFrequency.TRANSACTION_COMMIT;
 
 }

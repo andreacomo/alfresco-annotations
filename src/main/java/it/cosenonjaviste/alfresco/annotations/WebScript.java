@@ -31,7 +31,7 @@ import java.lang.annotation.*;
 public @interface WebScript {
 
     /**
-     * Webscript name with (or without) patn name. I.e. <tt>myWebScript</tt> or <tt>it.cnj.myWebScript</tt>
+     * WebScript name with (or without) path name. I.e. <tt>myWebScript</tt> or <tt>it.cnj.myWebScript</tt>
      *
      * @return a bean name
      */

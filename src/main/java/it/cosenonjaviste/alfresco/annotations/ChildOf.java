@@ -22,5 +22,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ChildOf {
 
+    /**
+     * Parent bean name
+     *
+     * @return parent bean name
+     */
     String value();
 }

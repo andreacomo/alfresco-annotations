@@ -8,7 +8,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.StringUtils;
 
-
 /**
  * <tt>BeanFactoryPostProcessor</tt> for {@link WebScriptConfigurer} annotation.
  *

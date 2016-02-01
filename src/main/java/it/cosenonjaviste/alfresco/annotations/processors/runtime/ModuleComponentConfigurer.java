@@ -1,25 +1,12 @@
 package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 
-import it.cosenonjaviste.alfresco.annotations.Behaviour;
 import it.cosenonjaviste.alfresco.annotations.ModuleComponent;
-import it.cosenonjaviste.alfresco.annotations.processors.exceptions.ConfigurationAnnotationException;
 import org.alfresco.repo.module.AbstractModuleComponent;
-import org.alfresco.repo.policy.ClassPolicy;
-import org.alfresco.repo.policy.JavaBehaviour;
-import org.alfresco.repo.policy.PolicyComponent;
-import org.alfresco.service.namespace.NamespacePrefixResolver;
-import org.alfresco.service.namespace.NamespaceService;
-import org.alfresco.service.namespace.QName;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * <tt>BeanPostProcessor</tt> for {@link ModuleComponent} annotation.
