@@ -165,7 +165,16 @@ public class MyWebScript extends DeclarativeWebScript {
 }
 ```
 
-will generate ```myWebScript.get.desc.xml``` with content:
+will generate ```myWebScript.get.desc.xml``` with content in your source folder:
 
 ```xml
+<webscript>
+  <shortname>hello-again</shortname>
+  <description></description>
+  <url>/v1/my-webscript</url>
+  <authentication>user</authentication>
+  <format default="json">any</format>
+</webscript>
 ```
+
+It's up to you to complete MVC with ```myWebScript.get.json.ftl``` file.
