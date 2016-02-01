@@ -37,11 +37,6 @@ public class BehaviourConfigurer implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof ClassPolicy && bean.getClass().getAnnotation(Behaviour.class) != null) {
             Behaviour behaviorAnnotation = bean.getClass().getAnnotation(Behaviour.class);
 
@@ -58,6 +53,11 @@ public class BehaviourConfigurer implements BeanPostProcessor {
             }
         }
 
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return bean;
     }
 

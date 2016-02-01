@@ -3,6 +3,7 @@ package it.cosenonjaviste.alfresco.annotations;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
+import org.alfresco.repo.policy.Behaviour.NotificationFrequency;
 
 /**
  * Stereotype annotation for defining a new behaviour.
@@ -30,6 +31,6 @@ public @interface Behaviour {
      */
     String type();
 
-    org.alfresco.repo.policy.Behaviour.NotificationFrequency frequency() default org.alfresco.repo.policy.Behaviour.NotificationFrequency.TRANSACTION_COMMIT;
+    NotificationFrequency frequency() default NotificationFrequency.TRANSACTION_COMMIT;
 
 }
