@@ -35,7 +35,7 @@ public class BehaviourConfigurerTest {
     public void shouldRegisterOnUpdateProperties() throws Exception {
         when(prefixResolver.getNamespaceURI(PREFIX)).thenReturn(NAMESPACE);
 
-        configurer.postProcessBeforeInitialization(new ClassPolicyMocks.UpdateProperties(), "updateProperties");
+        configurer.postProcessAfterInitialization(new ClassPolicyMocks.UpdateProperties(), "updateProperties");
 
         verify(prefixResolver).getNamespaceURI(PREFIX);
         verify(policyComponent).bindClassBehaviour(
@@ -47,7 +47,7 @@ public class BehaviourConfigurerTest {
     @Test
     public void shouldRegisterOnCreateNodeAndOnDeleteNode() throws Exception {
 
-        configurer.postProcessBeforeInitialization(new ClassPolicyMocks.CreateDeleteNode(), "createDeleteNode");
+        configurer.postProcessAfterInitialization(new ClassPolicyMocks.CreateDeleteNode(), "createDeleteNode");
 
         verify(policyComponent).bindClassBehaviour(
                 eq(QName.createQName(NamespaceService.ALFRESCO_URI, "onCreateNode")),

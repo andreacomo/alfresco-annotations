@@ -1,6 +1,7 @@
 package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -21,7 +22,7 @@ import org.springframework.util.StringUtils;
  */
 public abstract class AbstractPostProcessorConfigurer implements BeanFactoryPostProcessor, PriorityOrdered {
 
-    protected final Logger logger = Logger.getLogger(this.getClass());
+    protected final Log logger = LogFactory.getLog(this.getClass());
 
     private int order = Ordered.LOWEST_PRECEDENCE;// default: same as non-Ordered
 

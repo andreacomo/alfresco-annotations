@@ -5,6 +5,14 @@ Spring stereotype annotations for simplifying development with Alfresco
 Tired of compiling boring Spring xml for defining Alfresco beans? Always forget what's the Java-based WebScripts' naming convention or the Action Executer parent bean name?
 Then this project is for you!
 
+## Supported Platforms
+Tested on:
+
+* Alfresco Community 4.2.f
+* Alfresco Community 5.0.d
+
+May works on other micro-versions. Please pull-request if works on other versions.
+
 ## Where is the magic?
 
 There is no magic! This project is simply a collection of **Spring stereotypes annotations**, some **Spring lifecycle processors** to do boilerplate code for you and an **annotation processor** to stop writing webscript xml descriptor!

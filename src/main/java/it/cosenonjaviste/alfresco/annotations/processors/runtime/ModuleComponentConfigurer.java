@@ -7,15 +7,15 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * <tt>BeanPostProcessor</tt> for {@link ModuleComponent} annotation.
  *
  * @author Andrea Como
  */
+@Component
 public class ModuleComponentConfigurer implements BeanPostProcessor, ApplicationContextAware {
-
-    private static final Logger LOGGER = Logger.getLogger(ModuleComponentConfigurer.class);
 
     private ApplicationContext applicationContext;
 

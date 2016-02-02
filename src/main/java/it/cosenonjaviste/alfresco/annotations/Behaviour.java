@@ -1,5 +1,6 @@
 package it.cosenonjaviste.alfresco.annotations;
 
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
@@ -20,6 +21,7 @@ import org.alfresco.repo.policy.Behaviour.NotificationFrequency;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
+@DependsOn({"policyComponent", "NamespaceService"})
 public @interface Behaviour {
 
     /**

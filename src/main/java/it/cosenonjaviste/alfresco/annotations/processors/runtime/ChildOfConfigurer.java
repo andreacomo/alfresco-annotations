@@ -26,6 +26,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 
@@ -36,6 +37,7 @@ import org.springframework.util.StringUtils;
  *
  * @author Jan Esser
  */
+@Component
 public class ChildOfConfigurer extends AbstractPostProcessorConfigurer {
 
 

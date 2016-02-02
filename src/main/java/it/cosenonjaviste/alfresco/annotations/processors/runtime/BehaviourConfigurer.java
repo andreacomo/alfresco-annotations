@@ -8,9 +8,13 @@ import org.alfresco.repo.policy.PolicyComponent;
 import org.alfresco.service.namespace.NamespacePrefixResolver;
 import org.alfresco.service.namespace.NamespaceService;
 import org.alfresco.service.namespace.QName;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -22,21 +26,26 @@ import java.util.List;
  *
  * @author Andrea Como
  */
-public class BehaviourConfigurer implements BeanPostProcessor {
+@Component
+public class BehaviourConfigurer implements BeanPostProcessor, ApplicationContextAware{
 
-    private static final Logger LOGGER = Logger.getLogger(BehaviourConfigurer.class);
+    private static Log LOGGER = LogFactory.getLog(BehaviourConfigurer.class);
 
-    private final NamespacePrefixResolver prefixResolver;
+    // Cannot use injection to prevent premature bean creation
+    private PolicyComponent policyComponent;
 
-    private final PolicyComponent policyComponent;
+    // Cannot use injection to prevent premature bean creation
+    private NamespacePrefixResolver prefixResolver;
 
-    BehaviourConfigurer(PolicyComponent policyComponent, NamespacePrefixResolver prefixResolver) {
-        this.policyComponent = policyComponent;
-        this.prefixResolver = prefixResolver;
-    }
+    private ApplicationContext applicationContext;
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof ClassPolicy && bean.getClass().getAnnotation(Behaviour.class) != null) {
             Behaviour behaviorAnnotation = bean.getClass().getAnnotation(Behaviour.class);
 
@@ -46,7 +55,7 @@ public class BehaviourConfigurer implements BeanPostProcessor {
                 org.alfresco.repo.policy.Behaviour behaviour = new JavaBehaviour(bean, method.getName(),
                         behaviorAnnotation.frequency());
 
-                this.policyComponent.bindClassBehaviour(
+                this.getPolicyComponent().bindClassBehaviour(
                         QName.createQName(NamespaceService.ALFRESCO_URI, method.getName()),
                         asQName(behaviorAnnotation.type()),
                         behaviour);
@@ -56,19 +65,28 @@ public class BehaviourConfigurer implements BeanPostProcessor {
         return bean;
     }
 
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
+    private PolicyComponent getPolicyComponent() {
+        if (this.policyComponent == null) {
+            this.policyComponent = applicationContext.getBean("policyComponent", PolicyComponent.class);
+        }
+        return this.policyComponent;
     }
 
     private QName asQName(String qName) {
-        QName resolved = QName.resolveToQName(prefixResolver, qName);
+        QName resolved = QName.resolveToQName(getPrefixResolver(), qName);
         if (resolved.toString().equals(QName.NAMESPACE_BEGIN + NamespaceService.CONTENT_MODEL_1_0_URI + QName.NAMESPACE_END + qName)) {
             throw new ConfigurationAnnotationException("Unable to convert QName string " + qName);
         } else {
             LOGGER.debug(String.format("QName '%s' resolved", resolved));
             return resolved;
         }
+    }
+
+    private NamespacePrefixResolver getPrefixResolver() {
+        if (this.prefixResolver == null) {
+            this.prefixResolver = applicationContext.getBean("NamespaceService", NamespacePrefixResolver.class);
+        }
+        return this.prefixResolver;
     }
 
     private List<Method> discoverEventsMethods(ClassPolicy bean) {
@@ -83,5 +101,10 @@ public class BehaviourConfigurer implements BeanPostProcessor {
         }
 
         return methods;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }
