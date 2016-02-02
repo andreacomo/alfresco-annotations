@@ -42,14 +42,14 @@ enable *annotation discovery by package* in <tt>module-context.xml</tt> (or any 
 
 
 and there you go! If you want annotation processor to write webscript descriptors for you, 
-just set *where to write them* on *Maven Compiler Plugin*, such as:
+just set *where to write them* on *Maven Compiler Plugin*, for example in target folder *where they are expected*:
 
 ```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-compiler-plugin</artifactId>
     <configuration>
-        <generatedSourcesDirectory>src/main/amp/config/alfresco/extension/templates/webscripts</generatedSourcesDirectory>
+        <generatedSourcesDirectory>${project.build.directory}/${project.build.finalName}/config/alfresco/extension/templates/webscripts</generatedSourcesDirectory>
     </configuration>
 </plugin>
 ```
