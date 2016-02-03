@@ -1,3 +1,18 @@
+/*
+ * Copyright 2002-2015 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 
 import org.apache.commons.logging.Log;
@@ -18,13 +33,14 @@ import org.springframework.util.StringUtils;
  * <br>
  * Mostly taken from https://jira.spring.io/browse/SPR-6343 and https://github.com/janesser/spring-framework/blob/SPR-6343/spring-context/src/main/java/org/springframework/context/annotation/ChildOfConfigurer.java
  *
- * @author Andrea Como
+ * @author Jan Esser
+ * @editor Andrea Como
  */
 public abstract class AbstractPostProcessorConfigurer implements BeanFactoryPostProcessor, PriorityOrdered {
 
     protected final Log logger = LogFactory.getLog(this.getClass());
 
-    private int order = Ordered.LOWEST_PRECEDENCE;// default: same as non-Ordered
+    private int order = Ordered.LOWEST_PRECEDENCE;
 
     public void setOrder(int order) {
         this.order = order;

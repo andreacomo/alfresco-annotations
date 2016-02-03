@@ -1,4 +1,3 @@
-package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 /*
  * Copyright 2002-2015 the original author or authors.
  *
@@ -14,6 +13,7 @@ package it.cosenonjaviste.alfresco.annotations.processors.runtime;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 
 import it.cosenonjaviste.alfresco.annotations.ChildOf;
 import org.apache.log4j.Logger;
@@ -36,6 +36,7 @@ import org.springframework.util.StringUtils;
  * Mostly taken from https://jira.spring.io/browse/SPR-6343 and https://github.com/janesser/spring-framework/blob/SPR-6343/spring-context/src/main/java/org/springframework/context/annotation/ChildOfConfigurer.java
  *
  * @author Jan Esser
+ * @editor Andrea Como
  */
 @Component
 public class ChildOfConfigurer extends AbstractPostProcessorConfigurer {
