@@ -2,7 +2,7 @@
     <shortname>${shortName}</shortname>
     <description>${description}</description>
     <#list urls as url>
-    <url>${url}</url>
+    <url><![CDATA[${url}]]></url>
     </#list>
     <#if runAs?has_content>
     <authentication runas="${runAs}">${auth}</authentication>
