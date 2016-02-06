@@ -30,7 +30,7 @@ public class WebScriptDescriptorWriterTest {
         assertNotNull(descriptor);
         assertTrue(descriptor.contains("<shortname>test1</shortname>"));
         assertTrue(descriptor.contains("<description></description>"));
-        assertTrue(descriptor.contains("<url>/v1/test</url>"));
+        assertTrue(descriptor.contains("<url><![CDATA[/v1/test]]></url>"));
         assertTrue(descriptor.contains("<authentication>none</authentication>"));
         assertTrue(descriptor.contains("<format default=\"html\">any</format>"));
         assertFalse(descriptor.contains("<transaction>"));
@@ -45,8 +45,8 @@ public class WebScriptDescriptorWriterTest {
         String descriptor = fillTemplateIntoString(annotation);
 
         assertNotNull(descriptor);
-        assertTrue(descriptor.contains("<url>/v1/test</url>"));
-        assertTrue(descriptor.contains("<url>/v1/test?q={q}</url>"));
+        assertTrue(descriptor.contains("<url><![CDATA[/v1/test]]></url>"));
+        assertTrue(descriptor.contains("<url><![CDATA[/v1/test?q={q}]]></url>"));
     }
 
     @Test

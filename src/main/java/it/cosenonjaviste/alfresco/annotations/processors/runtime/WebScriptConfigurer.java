@@ -52,8 +52,7 @@ public class WebScriptConfigurer extends AbstractPostProcessorConfigurer {
                     }
                 }
             } catch (ClassNotFoundException e) {
-                logger.error(e.getMessage(), e);
-                throw new FatalBeanException(e.getMessage(), e);
+                logger.warn(String.format("ClassNotFoundException while searching for ChildOf annotation on bean name '%s' of type '%s'. This error is expected on Alfresco Community 4.2.c. for some classes in package 'org.alfresco.repo'", definitionName, beanClassName));
             }
         } else {
             logger.error(String.format("Unable to register '%s' as webscript because beanFactory is not instance of 'DefaultListableBeanFactory'", definitionName));

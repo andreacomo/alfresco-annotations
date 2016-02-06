@@ -8,15 +8,19 @@ Then this project is for you!
 ## Supported Platforms
 Tested on:
 
+* Alfresco Community 4.2.c
+* Alfresco Community 4.2.d
+* Alfresco Community 4.2.e
 * Alfresco Community 4.2.f
+* Alfresco Community 5.0.c
 * Alfresco Community 5.0.d
 
-May works on other micro-versions. Please pull-request if works on other versions.
+May works on other micro-versions. Please edit this file and pull-request if works on other versions.
 
 ## Where is the magic?
 
 There is no magic! This project is simply a collection of **Spring stereotypes annotations**, some **Spring lifecycle processors** to do boilerplate code for you and an **annotation processor** to stop writing webscript xml descriptor!
-Just add it to your project dependencies:
+Just add it to your **REPO** project dependencies:
 
 ```xml
 <dependency>
