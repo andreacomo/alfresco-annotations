@@ -76,7 +76,7 @@ public enum FormatType {
     MEDIAWIKI,
 
     /**
-     * text/html (head & tail chopped)
+     * text/html (head &amp; tail chopped)
      */
     PORTLET,
 

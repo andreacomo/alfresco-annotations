@@ -36,7 +36,7 @@ import org.springframework.util.StringUtils;
  * Mostly taken from https://jira.spring.io/browse/SPR-6343 and https://github.com/janesser/spring-framework/blob/SPR-6343/spring-context/src/main/java/org/springframework/context/annotation/ChildOfConfigurer.java
  *
  * @author Jan Esser
- * @editor Andrea Como
+ * @cnj.editor Andrea Como
  */
 @Component
 public class ChildOfConfigurer extends AbstractPostProcessorConfigurer {

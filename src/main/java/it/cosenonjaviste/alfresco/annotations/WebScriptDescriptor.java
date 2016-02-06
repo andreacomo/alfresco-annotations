@@ -74,7 +74,7 @@ public @interface WebScriptDescriptor {
     /**
      * Where to specify format in url: controls how the content-type of the response can be specified via the URI
      *
-     * @see {@link FormatTypePosition}
+     * @see FormatTypePosition
      *
      * @return where to specify format
      */

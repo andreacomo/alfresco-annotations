@@ -55,7 +55,7 @@ public @interface WebScript {
     /**
      * Http method
      *
-     * @return
+     * @return http method class
      */
     HttpMethod method() default HttpMethod.GET;
 

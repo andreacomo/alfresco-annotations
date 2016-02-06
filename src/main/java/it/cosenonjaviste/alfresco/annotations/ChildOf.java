@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
  * </code>
  *
  * @author Jan Esser
- * @editor Andrea Como
+ * @cnj.editor Andrea Como
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

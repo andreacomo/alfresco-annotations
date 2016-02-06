@@ -25,12 +25,13 @@ package it.cosenonjaviste.alfresco.annotations.constants;
 public enum FormatTypePosition {
 
     /**
-     * The content-type is specified via the format query string parameter, for example <code>/helloworld?to=dave&format=xml</code>
+     * The content-type is specified via the format query string parameter,
+     * for example <pre>/helloworld?to=dave&amp;format=xml</pre>
      */
     ARGUMENT,
 
     /**
-     * The content-type is specified via the URI extension, for example <code>/hello/world.xml?to=dave</code>
+     * The content-type is specified via the URI extension, for example <pre>/hello/world.xml?to=dave</pre>
      */
     EXTENSION,
 
