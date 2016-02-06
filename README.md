@@ -1,4 +1,4 @@
-[Alfresco Annotations Logo](src/main/resources/META-INF/resources/images/aa.png)
+<img src="src/main/resources/META-INF/resources/images/aa.png" width="120" align="right"/>
 # Alfresco Annotations
 Spring stereotype annotations for simplifying development with Alfresco
 
