@@ -15,7 +15,7 @@ Tested on:
 * Alfresco Community 5.0.c
 * Alfresco Community 5.0.d
 
-May works on other micro-versions. Please edit this file and pull-request if works on other versions.
+May works on other versions. Please edit this file and pull-request if works on other versions.
 
 ## Where is the magic?
 
@@ -30,7 +30,7 @@ Just add it to your **REPO** project dependencies:
 </dependency>
 ```
 
-enable *annotation discovery by package* in <tt>module-context.xml</tt> (or any you prefer):
+enable *annotation discovery by package* in your <tt>module-context.xml</tt> (or any other config file you prefer):
 
 ```xml
 <?xml version='1.0' encoding='UTF-8'?>
@@ -105,7 +105,7 @@ and thre you go, ready to behave!
 
 Since Alfresco 5, you can choose to use standard annotations ```org.alfresco.repo.policy.annotation.Behaviour``` and ```org.alfresco.repo.policy.annotation.BehaviourBean```.
 ### @JsExtension
-JavaScript API is easy and succinct in Alfresco, always powerful but sometimes not enought! To plug a new feature from Java is easy:
+JavaScript API is easy and succinct in Alfresco, always powerful but sometimes not enought! To plug a new feature in from Java is easy:
 
 ```java
 @JsExtension("hello")
@@ -140,7 +140,7 @@ public class HelloComponent extends AbstractModuleComponent {
 }
 ```
 
-Take care of ```moduleId```: it *must correspond* to your **module ID**, defined by *module.id* property in ```module.properties``` file.
+Take care of ```moduleId```: it *must correspond* to your **module ID**, defined by *module.id* property in ```module.properties``` file of your AMP. Usually corresponds to Maven *artifactId*.
 
 ### @WebScript
 WebScript are the most used feature in Alfresco, allowing access to repository feature in a RESTful way. Remembering Java-backed WebScript controller naming convention is pretty boring. I'd like to set a bean name and an HTTP method to define a new WebScript such as:
@@ -161,7 +161,7 @@ public class MyWebScript extends DeclarativeWebScript {
 If ```method``` is not specified, ```HttpMethod.GET``` is assumed as default.
 
 #### @WebScriptDescriptor
-The most annoying thing to deal with WebScript is to write **xml descriptor**. If you registered ```<generatedSourcesDirectory>``` in ```maven-compiler-plugin```, a class annotated like this:
+The most annoying thing to deal with WebScripts is to write **xml descriptor**. If you registered ```<generatedSourcesDirectory>``` in ```maven-compiler-plugin```, a class annotated like this:
 
 ```java
 @WebScript("myWebScript")
@@ -190,3 +190,5 @@ will generate ```myWebScript.get.desc.xml``` with content in your source folder:
 ```
 
 It's up to you to complete MVC with ```myWebScript.get.json.ftl``` file.
+
+Right now this annotation does not support some advanced descriptor features such as *family*, *cache*, *negotiate*, *kind* and *lifecycle*.
