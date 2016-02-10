@@ -71,7 +71,32 @@ Each annotation's javadoc helps you to remember which class you should or must e
  * [@WebScriptDescriptor](#webscriptdescriptor)
  
 ### @ActionExecuter
-Creating a new **Java Action** is pretty easy: just annotate your bean with ```@ActionExecuter```, name it and don't forget to extends ```ActionExecuterAbstractBase``` as annotation's javadoc says! (But forget bean parent name... this annotation will take care of it)
+##### From
+Creating a **Java Action** it was a matter of writing a class which extends ```ActionExecuterAbstractBase``` 
+```java
+public class MyAction extends ActionExecuterAbstractBase {
+
+  @Override
+  protected void executeImpl(Action action, NodeRef actionedUponNodeRef) {
+    // my action code
+  }
+
+  @Override
+  protected void addParameterDefinitions(List<ParameterDefinition> paramList) {
+
+  }
+}
+```
+and an xml bean declaration with parent **action-executer**:
+```xml
+<bean id="myAction"
+      class="it.cosenonjaviste.annotations.MyAction"
+      parent="action-executer">
+    
+</bean>
+```
+##### To
+Now, just annotate your class and that's all! Forget about bean parent name, [```@ActionExecuter```](src/main/java/it/cosenonjaviste/alfresco/annotations/ActionExecuter.java) will take care of it!
 
 ```java
 @ActionExecuter("myAction")
@@ -88,9 +113,39 @@ public class MyAction extends ActionExecuterAbstractBase {
   }
 }
 ```
+And if you don't remember parent class you must extends, annotation's javadoc will remind you.
 
 ### @Behaviour
-Stop remembering messy **Behaviour** policy registration: annotate your bean (implementing one or more ```org.alfresco.repo.policy.ClassPolicy``` children) such as
+##### From
+Remembering how to register a behavior is always annoying. You have to write a class implementing one or more  ```ClassPolicy``` children and register for which *content type* trigger it, for example:
+```java
+public class MyBehavior implements NodeServicePolicies.OnUpdatePropertiesPolicy {
+
+  private PolicyComponent policyComponent;
+
+  public void init() {
+    Behaviour onUpdateProperties = new JavaBehaviour(this, "onUpdateProperties",
+            Behaviour.NotificationFrequency.TRANSACTION_COMMIT);
+
+    this.policyComponent.bindClassBehaviour(QName.createQName(
+                    NamespaceService.ALFRESCO_URI, "onUpdateProperties"), ContentModel.TYPE_CONTENT,
+            this.onUpdateProperties);
+  }
+
+  @Override
+  public void onUpdateProperties(NodeRef nodeRef, Map<QName, Serializable> before, Map<QName, Serializable> after) {
+    // do stuff on properties update for cm:content
+  }
+}
+```
+Then write xml bean definition:
+```xml
+<bean id="myBehaviour" class="it.cosenonjaviste.annotations.MyBehavior" init-method="init">
+
+</bean>
+```
+##### To
+Stop remembering messy **Behaviour** policy registration: just annotate your bean like that:
 
 ```java
 @Behaviour(value = "myBehaviour", type = "cm:content")
@@ -102,11 +157,36 @@ public class MyBehavior implements NodeServicePolicies.OnUpdatePropertiesPolicy 
   }
 }
 ```
-and thre you go, ready to behave!
+and thre you go, ready to behave! [```BehaviourConfigurer```](src/main/java/it/cosenonjaviste/alfresco/annotations/processors/runtime/BehaviourConfigurer.java) will take care of registering behaviour methods to *PolicyComponent*.
 
 Since Alfresco 5, you can choose to use standard annotations ```org.alfresco.repo.policy.annotation.Behaviour``` and ```org.alfresco.repo.policy.annotation.BehaviourBean```.
+
 ### @JsExtension
-JavaScript API is easy and succinct in Alfresco, always powerful but sometimes not enought! To plug a new feature in from Java is easy:
+JavaScript API is easy and succinct in Alfresco, always powerful but sometimes not enought! 
+##### From
+To plug a new feature in from Java you have to extends ```BaseScopableProcessorExtension``` or ```BaseProcessorExtension```:
+
+```java
+public class HelloExtension extends BaseScopableProcessorExtension {
+
+  public String sayIt() {
+    return "Hello";
+  }
+}
+```
+and register it in context xml file along with bean parent name **baseJavaScriptExtension** and providing an *extensionName*:
+
+```xml
+<bean id="helloExtension"
+      class="it.cosenonjaviste.annotations.HelloExtension"
+      parent="baseJavaScriptExtension">
+    <property name="extensionName">
+        <value>hello</value>
+    </property>
+</bean>
+```
+##### To
+Now it's easier: annotate your bean
 
 ```java
 @JsExtension("hello")
@@ -123,12 +203,33 @@ then access your new service in JavaScript like this:
 ```javascript
 logger.log(hello.sayIt());
 ```
-```@JsExtension``` will register bean name as **Extension** name.
+[```JsExtensionConfigurer```](src/main/java/it/cosenonjaviste/alfresco/annotations/processors/runtime/JsExtensionConfigurer.java) will register bean name as **Extension** name.
 
 ### @ModuleComponent
 **Module Components** are special beans to be aimed at single execution for a specific AMP version, useful for initialization/update purpose.
 
-Module Components require some configuration you can achieve through annotation parameters:
+Module Components require a bean extending ```AbstractModuleComponent``` 
+```java
+public class HelloComponent extends AbstractModuleComponent {
+
+  @Override
+  protected void executeInternal() throws Throwable {
+    // execute on startup
+  }
+}
+```
+a bunch of xml configuration attributes and a bean parent **module.baseComponent** a such as:
+
+```xml
+<bean id="myComponent" class="it.cosenonjaviste.annotations.HelloComponent" parent="module.baseComponent">
+    <property name="moduleId" value="my-module-id" />
+    <property name="name" value="myComponent" />
+    <property name="description" value="A description" />
+    <property name="sinceVersion" value="1.0.0" />
+</bean>
+```
+##### To
+Now you can achieve all of this through annotation parameters:
 
 ```java
 @ModuleComponent(moduleId = "my-module-id", name = "myComponent", sinceVersion = "1.0.0")
@@ -140,14 +241,38 @@ public class HelloComponent extends AbstractModuleComponent {
   }
 }
 ```
+and [```ModuleComponentConfigurer```](src/main/java/it/cosenonjaviste/alfresco/annotations/processors/runtime/ModuleComponentConfigurer.java) will set these values to bean instance.
 
 Take care of ```moduleId```: it *must correspond* to your **module ID**, defined by *module.id* property in ```module.properties``` file of your AMP. Usually corresponds to Maven *artifactId*.
 
 ### @WebScript
-WebScript are the most used feature in Alfresco, allowing access to repository feature in a RESTful way. Remembering Java-backed WebScript controller naming convention is pretty boring. I'd like to set a bean name and an HTTP method to define a new WebScript such as:
+WebScript are the most used feature in Alfresco, allowing access to repository feature in a RESTful way. 
+
+##### From
+For creating a new Java-backed WebScript you can extends ```DeclarativeWebScript``` (or one of its parent)
+```java
+public class MyWebScript extends DeclarativeWebScript {
+
+  @Override
+  protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
+    Map<String, Object> model = new HashMap<>();
+    // do stuff
+    return model;
+  }
+}
+```
+and follow a *specific naming convention* along with parent bean **webscript** while registering on xml context file:
+```xml
+<bean id="webscript.it.cnj.myWebscript.post"
+      class="it.cosenonjaviste.annotations.MyWebscript"
+      parent="webscript">
+</bean>
+```
+##### To
+Remembering Java-backed WebScript controller naming convention is pretty boring. I'd like to set a bean name and an HTTP method to define a new WebScript such as:
 
 ```java
-@WebScript(value = "myWebscript", method = HttpMethod.POST)
+@WebScript(value = "it.cnj.myWebscript", method = HttpMethod.POST)
 public class MyWebScript extends DeclarativeWebScript {
 
   @Override
@@ -178,7 +303,7 @@ public class MyWebScript extends DeclarativeWebScript {
 }
 ```
 
-will generate ```myWebScript.get.desc.xml``` with content in your source folder:
+will generate ```myWebScript.get.desc.xml``` for you **at compile time** through [```WebScriptDescriptorGenerator```](src/main/java/it/cosenonjaviste/alfresco/annotations/processors/compiletime/WebScriptDescriptorGenerator.java):
 
 ```xml
 <webscript>
@@ -190,6 +315,6 @@ will generate ```myWebScript.get.desc.xml``` with content in your source folder:
 </webscript>
 ```
 
-It's up to you to complete MVC with ```myWebScript.get.json.ftl``` file.
+It's up to you now to complete MVC with ```myWebScript.get.json.ftl``` file.
 
 Right now this annotation does not support some advanced descriptor features such as *family*, *cache*, *negotiate*, *kind* and *lifecycle*.
