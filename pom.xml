@@ -48,6 +48,7 @@
         <powermock.version>1.6.4</powermock.version>
         <junit.version>4.12</junit.version>
         <freemarker.version>2.3.23</freemarker.version>
+        <compile-testing.version>0.8</compile-testing.version>
     </properties>
 
     <repositories>
@@ -110,6 +111,13 @@
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
             <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.testing.compile</groupId>
+            <artifactId>compile-testing</artifactId>
+            <version>${compile-testing.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
