@@ -318,3 +318,28 @@ will generate ```myWebScript.get.desc.xml``` for you **at compile time** through
 It's up to you now to complete MVC with ```myWebScript.get.json.ftl``` file.
 
 Right now this annotation does not support some advanced descriptor features such as *family*, *cache*, *negotiate*, *kind* and *lifecycle*.
+
+##### @IsAConstraint
+Creating programmatically an Action require you register your ParameterDefinition. 
+
+```
+new ParameterDefinitionImpl(name,
+                    this.definitionType,
+                    isMandatory,
+                    getParamDisplayLabel(name),
+                    isMultiValued,
+                    constraint);
+``` 
+
+If you have to define a constraint you have to declare in your xml a bean implementing BaseParameterConstraint and with parent the bean *action-constraint*.
+```xml
+<bean id="beanId" class="com.example.MyConstraint" parent="action-constraint"/>
+```
+
+@IsAConstraint is a convenient and meaningful stereotype to shortcut the following set of annotation 
+
+```
+ @Component
+ @ChildOf("action-constraint")
+```
+ 
