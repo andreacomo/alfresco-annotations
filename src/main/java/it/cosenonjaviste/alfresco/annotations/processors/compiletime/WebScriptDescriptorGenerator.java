@@ -57,7 +57,7 @@ public class WebScriptDescriptorGenerator extends AbstractProcessor {
             return true;
         } catch (Exception e) {
             log.error("Error during descriptor generation. " + e.getMessage(), e);
-            throw new WebScriptDescriptorGeneratorException(e);
+            throw new WebScriptDescriptorGeneratorException(e.getMessage(), e);
         }
     }
 
@@ -65,10 +65,14 @@ public class WebScriptDescriptorGenerator extends AbstractProcessor {
         WebScript webScriptAnnotation = classElement.getAnnotation(WebScript.class);
         WebScriptDescriptor descriptor = classElement.getAnnotation(WebScriptDescriptor.class);
 
-        String name = extractWebScriptName(webScriptAnnotation.value());
-        String path = extractWebScriptPath(webScriptAnnotation.value());
-        String descName = name + "." + webScriptAnnotation.method().toString().toLowerCase() + ".desc.xml";
-        this.resourceWriter.generateResourceFile(descriptor, descName, path);
+        if (webScriptAnnotation != null) {
+            String name = extractWebScriptName(webScriptAnnotation.value());
+            String path = extractWebScriptPath(webScriptAnnotation.value());
+            String descName = name + "." + webScriptAnnotation.method().toString().toLowerCase() + ".desc.xml";
+            this.resourceWriter.generateResourceFile(descriptor, descName, path);
+        } else {
+            throw new WebScriptDescriptorGeneratorException("WebScript annotation must be present with WebScriptDescriptor!");
+        }
     }
 
     private String extractWebScriptPath(String value) {

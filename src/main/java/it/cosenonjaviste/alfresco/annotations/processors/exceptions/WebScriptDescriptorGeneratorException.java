@@ -20,6 +20,11 @@ package it.cosenonjaviste.alfresco.annotations.processors.exceptions;
  */
 public class WebScriptDescriptorGeneratorException extends RuntimeException {
 
-    public WebScriptDescriptorGeneratorException(Exception e) {
+    public WebScriptDescriptorGeneratorException(String message) {
+        super(message);
+    }
+
+    public WebScriptDescriptorGeneratorException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
