@@ -53,7 +53,7 @@ public class OnCompleteTaskListenerValidator extends AbstractProcessor {
         for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(OnCompleteTaskListener.class)) {
 
 
-            if (!ClassHelper.hasInterface(annotatedElement, TaskCompleteListener.class)) {
+            if (!ClassHelper.extendsSuperClass((TypeElement)annotatedElement, TaskCompleteListener.class)) {
                 logger.error("only classes implementing " + TaskCompleteListener.class + " can be annotated as " + OnCompleteTaskListener.class.getName(), annotatedElement);
             }
 

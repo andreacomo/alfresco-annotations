@@ -51,7 +51,7 @@ public class OnCreateTaskListenerValidator extends AbstractProcessor {
         logger.info(getClass().getName() + " starts annotation processing");
         for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(OnCreateTaskListener.class)) {
 
-            if (!ClassHelper.hasInterface(annotatedElement, TaskCreateListener.class)) {
+            if (!ClassHelper.extendsSuperClass((TypeElement) annotatedElement, TaskCreateListener.class)) {
                 logger.error("only classes implementing " + TaskCreateListener.class + " can be annotated as " + OnCreateTaskListener.class.getName(), annotatedElement);
             }
 

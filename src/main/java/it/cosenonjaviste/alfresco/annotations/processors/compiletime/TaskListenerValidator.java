@@ -52,7 +52,7 @@ public class TaskListenerValidator<T> extends AbstractProcessor {
         logger.info(getClass().getName() + " starts annotation processing");
         for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(TaskListenerBean.class)) {
 
-            if (!ClassHelper.hasInterface(annotatedElement, TaskListener.class)) {
+            if (!ClassHelper.hasInterface((TypeElement)annotatedElement, TaskListener.class)) {
                 logger.error("only classes implementing " + TaskListener.class + " can be annotated as " + TaskListenerBean.class.getName(), annotatedElement);
             }
 
