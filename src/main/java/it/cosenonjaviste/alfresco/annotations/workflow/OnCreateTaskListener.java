@@ -1,8 +1,11 @@
-package it.cosenonjaviste.alfresco.annotations;
+package it.cosenonjaviste.alfresco.annotations.workflow;
+
+import it.cosenonjaviste.alfresco.annotations.ChildOf;
 
 import java.lang.annotation.*;
 
 /**
+ * Stereotype on ActivitiBean annotation. A bean so annotated is also ChildOf activitiCreateTaskListener
  *
  * @author Alberto Rugnone
  */

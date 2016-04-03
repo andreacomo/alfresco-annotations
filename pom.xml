@@ -49,6 +49,7 @@
         <junit.version>4.12</junit.version>
         <freemarker.version>2.3.23</freemarker.version>
         <compile-testing.version>0.8</compile-testing.version>
+        <guava.version>19.0</guava.version>
     </properties>
 
     <repositories>
@@ -119,6 +120,13 @@
             <artifactId>compile-testing</artifactId>
             <version>${compile-testing.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

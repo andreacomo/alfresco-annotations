@@ -1,8 +1,8 @@
 package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 
-import it.cosenonjaviste.alfresco.annotations.ActivitiBean;
-import it.cosenonjaviste.alfresco.annotations.OnCompleteTaskListener;
-import it.cosenonjaviste.alfresco.annotations.OnCreateTaskListener;
+import it.cosenonjaviste.alfresco.annotations.workflow.ActivitiBean;
+import it.cosenonjaviste.alfresco.annotations.workflow.OnCompleteTaskListener;
+import it.cosenonjaviste.alfresco.annotations.workflow.OnCreateTaskListener;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

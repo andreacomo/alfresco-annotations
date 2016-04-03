@@ -1,4 +1,4 @@
-package it.cosenonjaviste.alfresco.annotations;
+package it.cosenonjaviste.alfresco.annotations.workflow;
 
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
