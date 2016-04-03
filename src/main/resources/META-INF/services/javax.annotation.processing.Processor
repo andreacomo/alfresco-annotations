@@ -1,1 +1,4 @@
 it.cosenonjaviste.alfresco.annotations.processors.compiletime.WebScriptDescriptorGenerator
+it.cosenonjaviste.alfresco.annotations.processors.compiletime.TaskListenerValidator
+it.cosenonjaviste.alfresco.annotations.processors.compiletime.OnCreateTaskListenerValidator
+it.cosenonjaviste.alfresco.annotations.processors.compiletime.OnCompleteTaskListenerValidator

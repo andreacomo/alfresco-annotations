@@ -15,18 +15,27 @@
  */
 package it.cosenonjaviste.alfresco.annotations.processors.compiletime;
 
+import com.google.common.base.Preconditions;
+
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.element.Element;
 import javax.tools.Diagnostic;
 
 /**
  * Logger wrapper on {@link javax.annotation.processing.Messager}
  *
  * @author Andrea Como
+ * @author Alberto Rugnone
  *
  */
 class ProcessLog {
 
     private final ProcessingEnvironment processingEnv;
+
+    static ProcessLog getLogger(ProcessingEnvironment processingEnv){
+        Preconditions.checkNotNull(processingEnv);
+        return new ProcessLog(processingEnv);
+    }
 
     public ProcessLog(ProcessingEnvironment processingEnv) {
         super();
@@ -45,6 +54,22 @@ class ProcessLog {
         log(Diagnostic.Kind.ERROR, message);
     }
 
+    public void info(String message, Element e) {
+        log(e,Diagnostic.Kind.NOTE, message);
+    }
+
+    public void warn(String message, Element e) {
+        log(e, Diagnostic.Kind.WARNING, message);
+    }
+
+    public void mandatoryWarn(String message, Element e) {
+        log(e, Diagnostic.Kind.MANDATORY_WARNING, message);
+    }
+
+    public void error(String message, Element e) {
+        log(e, Diagnostic.Kind.ERROR, message);
+    }
+
     public void error(String message, Exception e) {
         log(Diagnostic.Kind.ERROR, message);
         e.printStackTrace();
@@ -52,5 +77,9 @@ class ProcessLog {
 
     public void log(Diagnostic.Kind level, String message) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, message);
+    }
+
+    public void log(Element e, Diagnostic.Kind level, String message) {
+        processingEnv.getMessager().printMessage(level, message, e);
     }
 }
