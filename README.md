@@ -319,10 +319,10 @@ It's up to you now to complete MVC with ```myWebScript.get.json.ftl``` file.
 
 Right now this annotation does not support some advanced descriptor features such as *family*, *cache*, *negotiate*, *kind* and *lifecycle*.
 
-##### @IsAConstraint
+#### @IsAConstraint
 Creating programmatically an Action require you register your ParameterDefinition. 
 
-```
+```java
 new ParameterDefinitionImpl(name,
                     this.definitionType,
                     isMandatory,
@@ -338,8 +338,99 @@ If you have to define a constraint you have to declare in your xml a bean implem
 
 @IsAConstraint is a convenient and meaningful stereotype to shortcut the following set of annotation 
 
-```
+```java
  @Component
  @ChildOf("action-constraint")
 ```
+ 
+#### ActivitiBean
+Working with workflow can be cumbersome. If you have to add a java based listener and inject spring bean into that it can be even more. One solution is based on the following xml:
+ 
+```xml
+<bean id="workflow-listener"
+    class="it.cosenonjaviste.alfresco-annotation.WorkflowListener">
+</bean>
+
+
+<bean id="ek.workflowWithAssignment.billingTask.activitiBeanRegistry"
+    class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+    depends-on="activitiBeanRegistry">
+
+    <property name="targetObject">
+        <ref bean="activitiBeanRegistry" />
+    </property>
+
+    <property name="targetMethod" value="putAll" />
+
+    <property name="arguments">
+        <map>
+             <entry key="workflowListener" value-ref="workflow-listener" />
+        </map>
+    </property>
+</bean>
+```
+
+or better
+
+```java
+@ActivitiBean
+public class TaskListenerToTest implements TaskListener {
+
+    @Override
+    public void notify(DelegateTask delegateTask) {
+        ...
+    }
+}
+```
+
+There are some shortcutting stereotypes to class extending ActivitiBean, enabling coherence check on class hierarchy
+
+For example:
+##### TaskListenerBean
+
+enables check on interfaces and throw a compilation error if the annotated class error does not implement TaskListener interface
+
+```java
+@TaskListenerBean
+public class TaskListenerToTest implements TaskListener {
+
+    @Override
+    public void notify(DelegateTask delegateTask) {
+        ...
+    }
+}
+```
+
+##### OnCreateListenerBean
+
+enables check on superclasses and throw a compilation error if the annotated class  does not extends TaskCreateListener class.
+
+```java
+@OnCreateListenerBean
+public class TaskCreateListenerToTest extends TaskCreateListener {
+    @Override
+    public void notify(DelegateTask task) {
+        super.notify(task);
+        
+        ...
+    }
+}
+```
+
+##### OnCompleteTaskListener
+
+enables check on superclasses and throw a compilation error if the annotated class  does not extends TaskCompleteListener class.
+
+```java
+@OnCompleteTaskListener
+public class TaskCompleteListenerToTest extends TaskCompleteListener {
+    @Override
+    public void notify(DelegateTask task) {
+        super.notify(task);
+        
+        ...
+    }
+}
+```
+
  
