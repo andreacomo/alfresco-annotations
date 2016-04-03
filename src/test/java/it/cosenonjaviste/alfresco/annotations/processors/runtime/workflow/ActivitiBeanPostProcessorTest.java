@@ -3,6 +3,7 @@ package it.cosenonjaviste.alfresco.annotations.processors.runtime.workflow;
 import it.cosenonjaviste.alfresco.annotations.processors.runtime.ActivitiBeanPostProcessor;
 import it.cosenonjaviste.alfresco.annotations.workflow.ActivitiBean;
 import it.cosenonjaviste.alfresco.annotations.workflow.OnCreateTaskListener;
+import it.cosenonjaviste.alfresco.annotations.workflow.TaskListenerBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -39,15 +40,25 @@ public class ActivitiBeanPostProcessorTest {
             return "beanWithNameAsString";
         }
     }
+
+
     @OnCreateTaskListener("createTaskListenerName")
-    class CreateTaskListener {
+    class CreateTaskListenerToTest {
         @Override
         public String toString() {
             return "createTaskListenerAsString";
         }
     }
 
-    class BeanToTest {
+    @TaskListenerBean("taskListenerName")
+    class TaskListenerToTest {
+        @Override
+        public String toString() {
+            return "taskListenerAsString";
+        }
+    }
+
+    class NotAnnotatedBeanToTest {
         @Override
         public String toString() {
             return "beanNameAsString";
@@ -88,8 +99,17 @@ public class ActivitiBeanPostProcessorTest {
         when(context.getBean("activitiBeanRegistry")).thenReturn(activitiRegistry);
 
 
-        activitiBeanPostProcessor.postProcessBeforeInitialization(new CreateTaskListener(), "beanName");
+        activitiBeanPostProcessor.postProcessBeforeInitialization(new CreateTaskListenerToTest(), "beanName");
         assertEquals("createTaskListenerAsString", activitiRegistry.get("createTaskListenerName").toString());
+    }
+    @Test
+    public void shouldPostProcessBeforeInitializationATaskListener() throws Exception {
+        Map<String, Object> activitiRegistry = new HashMap<>();
+        when(context.containsBean("activitiBeanRegistry")).thenReturn(true);
+        when(context.getBean("activitiBeanRegistry")).thenReturn(activitiRegistry);
+
+        activitiBeanPostProcessor.postProcessBeforeInitialization(new TaskListenerToTest(), "beanName");
+        assertEquals("taskListenerAsString", activitiRegistry.get("taskListenerName").toString());
     }
 
     @Test
@@ -98,7 +118,7 @@ public class ActivitiBeanPostProcessorTest {
         when(context.containsBean("activitiBeanRegistry")).thenReturn(true);
         when(context.getBean("activitiBeanRegistry")).thenReturn(activitiRegistry);
 
-        activitiBeanPostProcessor.postProcessBeforeInitialization(new BeanToTest(), "beanName");
+        activitiBeanPostProcessor.postProcessBeforeInitialization(new NotAnnotatedBeanToTest(), "beanName");
         assertNull(activitiRegistry.get("beanName"));
     }
 }

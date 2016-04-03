@@ -3,6 +3,7 @@ package it.cosenonjaviste.alfresco.annotations.processors.runtime;
 import it.cosenonjaviste.alfresco.annotations.workflow.ActivitiBean;
 import it.cosenonjaviste.alfresco.annotations.workflow.OnCompleteTaskListener;
 import it.cosenonjaviste.alfresco.annotations.workflow.OnCreateTaskListener;
+import it.cosenonjaviste.alfresco.annotations.workflow.TaskListenerBean;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -39,6 +40,7 @@ public class ActivitiBeanPostProcessor implements BeanPostProcessor, Application
 
         final Map<String, Object> registry = (Map<String, Object>) applicationContext.getBean(ACTIVITI_BEAN_REGISTRY);
         add(bean, registry, ActivitiBean.class, defaultName);
+        add(bean, registry, TaskListenerBean.class, defaultName);
         add(bean, registry, OnCreateTaskListener.class, defaultName);
         add(bean, registry, OnCompleteTaskListener.class, defaultName);
 
