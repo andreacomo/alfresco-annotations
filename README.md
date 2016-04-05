@@ -344,7 +344,8 @@ If you have to define a constraint you have to declare in your xml a bean implem
 ```
  
 #### ActivitiBean
-Working with workflow can be cumbersome. If you have to add a java based listener and inject spring bean into that it can be even more. One solution is based on the following xml:
+Working with workflow can be cumbersome. 
+If you have to add a java based listener and inject spring bean into that it can be even more. One solution is based on the following xml:
  
 ```xml
 <bean id="workflow-listener"
@@ -370,7 +371,18 @@ Working with workflow can be cumbersome. If you have to add a java based listene
 </bean>
 ```
 
-or better
+then in your workflow task you have to add the listener as delegate, for example on complete event
+
+```xml
+ <userTask id="usertask1" name="User Task" activiti:candidateGroups="GROUP_ALFRESCO_ADMINISTRATOR" activiti:formKey="wf:adhocTask">
+  <extensionElements>
+    <activiti:taskListener event="complete" delegateExpression="${workflowListener}"></activiti:taskListener>
+  </extensionElements>
+ </userTask>
+```
+
+Workflow annotations allow to simplify the spring configuration part needed to register your listener into activitiBeanRegistry:
+
 
 ```java
 @ActivitiBean
