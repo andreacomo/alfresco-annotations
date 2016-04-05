@@ -69,6 +69,7 @@ Each annotation's javadoc helps you to remember which class you should or must e
 * [@ModuleComponent](#modulecomponent)
 * [@WebScript](#webscript)
  * [@WebScriptDescriptor](#webscriptdescriptor)
+* [@IsAConstraint](#isaconstraint)
  
 ### @ActionExecuter
 ##### From
@@ -320,28 +321,48 @@ It's up to you now to complete MVC with ```myWebScript.get.json.ftl``` file.
 Right now this annotation does not support some advanced descriptor features such as *family*, *cache*, *negotiate*, *kind* and *lifecycle*.
 
 #### @IsAConstraint
-Creating programmatically an Action require you register your ParameterDefinition. 
+Creating programmatically an Action *expecting parameters from client* requires you to register your ParameterDefinition
 
 ```java
 new ParameterDefinitionImpl(name,
-                    this.definitionType,
+                    definitionType,
                     isMandatory,
-                    getParamDisplayLabel(name),
+                    displayLabel,
                     isMultiValued,
-                    constraint);
+                    constraintBeanName);
 ``` 
+that may need a *constraint class* on parameter value specified by bean name ```constraintBeanName```.
 
-If you have to define a constraint you have to declare in your xml a bean implementing BaseParameterConstraint and with parent the bean *action-constraint*.
-```xml
-<bean id="beanId" class="com.example.MyConstraint" parent="action-constraint"/>
+Such a constraint is a bean extending ```BaseParameterConstraint``` abstract class (as reminded by annotation's javadoc):
+
+```java
+public class MyConstraint implements BaseParameterConstraint {
+...
+}
 ```
 
-@IsAConstraint is a convenient and meaningful stereotype to shortcut the following set of annotation 
+##### From
+So far, after implementing the constraint, you have to declare in your xml a bean with parent the bean *action-constraint*.
+```xml
+<bean id="myConstraint" class="com.example.MyConstraint" parent="action-constraint"/>
+```
+
+##### To
+```@IsAConstraint``` is a convenient and meaningful stereotype to shortcut the following set of annotation
 
 ```java
  @Component
  @ChildOf("action-constraint")
 ```
+
+So, you need just this annotation on your bean with its bean name
+```java
+@IsAConstraint("myConstraint")
+public class MyConstraint implements BaseParameterConstraint {
+...
+}
+```
+
  
 #### ActivitiBean
 Working with workflow can be cumbersome. 
