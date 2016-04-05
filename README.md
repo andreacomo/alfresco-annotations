@@ -1,6 +1,17 @@
 <img src="src/main/resources/META-INF/resources/images/aa.png" width="120" align="right"/>
+
 # Alfresco Annotations
 Spring stereotype annotations for simplifying development with Alfresco
+
+### CI Health
+
+* master
+
+     [![Build Status](https://travis-ci.org/andreacomo/alfresco-annotations.svg?branch=master)](https://travis-ci.org/andreacomo/alfresco-annotations)
+
+* develop
+
+     [![Build Status](https://travis-ci.org/andreacomo/alfresco-annotations.svg?branch=develop)](https://travis-ci.org/andreacomo/alfresco-annotations)
 
 ## Why
 Tired of compiling boring Spring xml for defining Alfresco beans? Always forget what's the Java-based WebScripts' naming convention or the Action Executer parent bean name?
