@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component;
 import java.lang.annotation.*;
 
 /**
- * A bean annotated ActivitiBean will be registered into activiti-bean registry.
+ * A bean annotated {@link ActivitiBean} will be registered into activiti-bean registry.
+ * <br >
+ *
+ * Annotated class should implement {@link org.activiti.engine.delegate.TaskListener}
  *
  * @author Alberto Rugnone
  */

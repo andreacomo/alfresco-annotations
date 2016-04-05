@@ -68,9 +68,14 @@ Each annotation's javadoc helps you to remember which class you should or must e
 * [@JsExtension](#jsextension)
 * [@ModuleComponent](#modulecomponent)
 * [@WebScript](#webscript)
- * [@WebScriptDescriptor](#webscriptdescriptor)
+  * [@WebScriptDescriptor](#webscriptdescriptor)
 * [@IsAConstraint](#isaconstraint)
- 
+* Workflows:
+  * [@ActivitiBean](#activitibean)
+  * [@TaskListenerBean](#tasklistenerbean)
+  * [@OnCreateListenerBean](#oncreatelistenerbean)
+  * [@OnCompleteTaskListener](#onCompletetasklistener)
+
 ### @ActionExecuter
 ##### From
 Creating a **Java Action** it was a matter of writing a class which extends ```ActionExecuterAbstractBase``` 
@@ -363,18 +368,22 @@ public class MyConstraint implements BaseParameterConstraint {
 }
 ```
 
- 
-#### ActivitiBean
-Working with workflow can be cumbersome. 
-If you have to add a java based listener and inject spring bean into that it can be even more. One solution is based on the following xml:
+### Workflows
+
+#### @ActivitiBean
+Working with workflow can be cumbersome.
+If you have to add a java based listener and inject spring bean into that it can be even more.
+
+##### From
+One solution is based on the following xml:
  
 ```xml
-<bean id="workflow-listener"
-    class="it.cosenonjaviste.alfresco-annotation.WorkflowListener">
+<bean id="my-task-listener"
+    class="it.cnj.MyTaskListener">
 </bean>
 
 
-<bean id="ek.workflowWithAssignment.billingTask.activitiBeanRegistry"
+<bean id="my.activitiBeanRegistry"
     class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
     depends-on="activitiBeanRegistry">
 
@@ -386,7 +395,7 @@ If you have to add a java based listener and inject spring bean into that it can
 
     <property name="arguments">
         <map>
-             <entry key="workflowListener" value-ref="workflow-listener" />
+             <entry key="customTaskListener" value-ref="my-task-listener" />
         </map>
     </property>
 </bean>
@@ -397,17 +406,18 @@ then in your workflow task you have to add the listener as delegate, for example
 ```xml
  <userTask id="usertask1" name="User Task" activiti:candidateGroups="GROUP_ALFRESCO_ADMINISTRATOR" activiti:formKey="wf:adhocTask">
   <extensionElements>
-    <activiti:taskListener event="complete" delegateExpression="${workflowListener}"></activiti:taskListener>
+    <activiti:taskListener event="complete" delegateExpression="${customTaskListener}"></activiti:taskListener>
   </extensionElements>
  </userTask>
 ```
 
-Workflow annotations allow to simplify the spring configuration part needed to register your listener into activitiBeanRegistry:
-
+##### To
+*Workflow annotations* allow you to simplify spring configuration part: *no more needed to register* your listener into ```activitiBeanRegistry```,
+just annotate your bean
 
 ```java
-@ActivitiBean
-public class TaskListenerToTest implements TaskListener {
+@ActivitiBean("customTaskListener")
+public class MyTaskListener implements TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -416,16 +426,21 @@ public class TaskListenerToTest implements TaskListener {
 }
 ```
 
-There are some shortcutting stereotypes to class extending ActivitiBean, enabling coherence check on class hierarchy
+and use bean name in your workflow definition (such as ```${customWfListener}```): [```ActivitiBeanPostProcessor```](src/main/java/it/cosenonjaviste/alfresco/annotations/processors/runtime/ActivitiBeanPostProcessor.java)
+post processor will register your bean for you gracefully.
 
-For example:
-##### TaskListenerBean
 
-enables check on interfaces and throw a compilation error if the annotated class error does not implement TaskListener interface
+There are some **shortcutting stereotypes** extending ```@ActivitiBean```, enabling coherence check on class hierarchy and listener events.
+
+We recommend to use these annotations:
+
+##### @TaskListenerBean
+
+Enables check on interfaces and throw a compilation error if the annotated class error does not implement ```TaskListener``` interface
 
 ```java
-@TaskListenerBean
-public class TaskListenerToTest implements TaskListener {
+@TaskListenerBean("customTaskListener")
+public class MyTaskListener implements TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -434,13 +449,13 @@ public class TaskListenerToTest implements TaskListener {
 }
 ```
 
-##### OnCreateListenerBean
+##### @OnCreateListenerBean
 
-enables check on superclasses and throw a compilation error if the annotated class  does not extends TaskCreateListener class.
+Enables check on superclasses and throws a compilation error if the annotated class does not extend ```TaskCreateListener``` class.
 
 ```java
-@OnCreateListenerBean
-public class TaskCreateListenerToTest extends TaskCreateListener {
+@OnCreateListenerBean("customCreateTaskListener")
+public class MyTaskCreateListener extends TaskCreateListener {
     @Override
     public void notify(DelegateTask task) {
         super.notify(task);
@@ -450,13 +465,15 @@ public class TaskCreateListenerToTest extends TaskCreateListener {
 }
 ```
 
-##### OnCompleteTaskListener
+Such listeners are notified when a **task is created**.
 
-enables check on superclasses and throw a compilation error if the annotated class  does not extends TaskCompleteListener class.
+##### @OnCompleteTaskListener
+
+Enables check on superclasses and throws a compilation error if the annotated class does not extend ```TaskCompleteListener``` class.
 
 ```java
-@OnCompleteTaskListener
-public class TaskCompleteListenerToTest extends TaskCompleteListener {
+@OnCompleteTaskListener("customCompleteTaskListener")
+public class MyTaskCompleteListener extends TaskCompleteListener {
     @Override
     public void notify(DelegateTask task) {
         super.notify(task);
@@ -465,5 +482,7 @@ public class TaskCompleteListenerToTest extends TaskCompleteListener {
     }
 }
 ```
+
+Such listeners are notified when a **task is completed**.
 
  

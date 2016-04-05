@@ -5,7 +5,11 @@ import it.cosenonjaviste.alfresco.annotations.ChildOf;
 import java.lang.annotation.*;
 
 /**
- * Stereotype on ActivitiBean annotation. A bean so annotated is also ChildOf activitiCreateTaskListener
+ * Stereotype on {@link ActivitiBean} annotation. A bean so annotated is also ChildOf <tt>activitiCreateTaskListener</tt> and
+ * should extend {@link org.alfresco.repo.workflow.activiti.tasklistener.TaskCreateListener}
+ * <br >
+ * Any children of {@link org.alfresco.repo.workflow.activiti.tasklistener.TaskCreateListener}
+ * will be notified when a <strong>task is created</strong>
  *
  * @author Alberto Rugnone
  */
