@@ -30,7 +30,6 @@ import java.util.Set;
  * @author Andrea Como
  */
 @SupportedAnnotationTypes("it.cosenonjaviste.alfresco.annotations.WebScriptDescriptor")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class WebScriptDescriptorGenerator extends AbstractProcessor {
 
     private ProcessLog log;
@@ -89,5 +88,15 @@ public class WebScriptDescriptorGenerator extends AbstractProcessor {
         } else {
             return value;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return last version supported
+     */
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 }
