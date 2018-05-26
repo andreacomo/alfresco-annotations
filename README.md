@@ -3,6 +3,8 @@
 # Alfresco Annotations
 Spring stereotype annotations for simplifying development with Alfresco
 
+[![Released Version](https://img.shields.io/maven-central/v/it.cosenonjaviste/alfresco-annotations.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22it.cosenonjaviste%22%20a%3A%22alfresco-annotations%22)
+
 ### CI Health
 
 * master
