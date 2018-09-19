@@ -28,6 +28,9 @@ Tested on:
 * Alfresco Community 4.2.f
 * Alfresco Community 5.0.c
 * Alfresco Community 5.0.d
+* Alfresco Community 5.1.x
+* Alfresco Community 5.2.x
+* Alfresco Enterprise 5.2.x (ACS)
 
 May works on other versions. Please edit this file and pull-request if works on other versions.
 
@@ -70,6 +73,14 @@ just set *where to write them* on *Maven Compiler Plugin*, for example in target
         <generatedSourcesDirectory>${project.build.directory}/${project.build.finalName}/config/alfresco/extension/templates/webscripts</generatedSourcesDirectory>
     </configuration>
 </plugin>
+```
+
+If you are using `Alfresco SDK 3`, *destination folder* (`generatedSourcesDirectory`) will be different and likely will be like this:
+
+```xml
+...
+<generatedSourcesDirectory>${project.build.directory}/classes/alfresco/extension/templates/webscripts</generatedSourcesDirectory>
+...
 ```
 
 ## Annotations
