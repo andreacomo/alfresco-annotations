@@ -3,6 +3,8 @@
 # Alfresco Annotations
 Spring stereotype annotations for simplifying development with Alfresco
 
+[![Released Version](https://img.shields.io/maven-central/v/it.cosenonjaviste/alfresco-annotations.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22it.cosenonjaviste%22%20a%3A%22alfresco-annotations%22)
+
 ### CI Health
 
 * master
@@ -26,6 +28,9 @@ Tested on:
 * Alfresco Community 4.2.f
 * Alfresco Community 5.0.c
 * Alfresco Community 5.0.d
+* Alfresco Community 5.1.x
+* Alfresco Community 5.2.x
+* Alfresco Enterprise 5.2.x (ACS)
 
 May works on other versions. Please edit this file and pull-request if works on other versions.
 
@@ -68,6 +73,14 @@ just set *where to write them* on *Maven Compiler Plugin*, for example in target
         <generatedSourcesDirectory>${project.build.directory}/${project.build.finalName}/config/alfresco/extension/templates/webscripts</generatedSourcesDirectory>
     </configuration>
 </plugin>
+```
+
+If you are using `Alfresco SDK 3`, *destination folder* (`generatedSourcesDirectory`) will be different and likely will be like this:
+
+```xml
+...
+<generatedSourcesDirectory>${project.build.directory}/classes/alfresco/extension/templates/webscripts</generatedSourcesDirectory>
+...
 ```
 
 ## Annotations
@@ -346,7 +359,7 @@ new ParameterDefinitionImpl(name,
                     displayLabel,
                     isMultiValued,
                     constraintBeanName);
-``` 
+```
 that may need a *constraint class* on parameter value specified by bean name ```constraintBeanName```.
 
 Such a constraint is a bean extending ```BaseParameterConstraint``` abstract class (as reminded by annotation's javadoc):
@@ -387,7 +400,7 @@ If you have to add a java based listener and inject spring bean into that it can
 
 ##### From
 One solution is based on the following xml:
- 
+
 ```xml
 <bean id="my-task-listener"
     class="it.cnj.MyTaskListener">
@@ -470,7 +483,7 @@ public class MyTaskCreateListener extends TaskCreateListener {
     @Override
     public void notify(DelegateTask task) {
         super.notify(task);
-        
+
         ...
     }
 }
@@ -488,7 +501,7 @@ public class MyTaskCompleteListener extends TaskCompleteListener {
     @Override
     public void notify(DelegateTask task) {
         super.notify(task);
-        
+
         ...
     }
 }
@@ -496,4 +509,4 @@ public class MyTaskCompleteListener extends TaskCompleteListener {
 
 Such listeners are notified when a **task is completed**.
 
- 
+
