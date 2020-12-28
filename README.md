@@ -31,6 +31,7 @@ Tested on:
 * Alfresco Community 5.1.x
 * Alfresco Community 5.2.x
 * Alfresco Enterprise 5.2.x (ACS)
+* Alfresco ACS 6.2 (Enterprise)
 
 May works on other versions. Please edit this file and pull-request if works on other versions.
 
