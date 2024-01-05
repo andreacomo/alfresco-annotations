@@ -2,7 +2,7 @@ repo_name: andreacomo/alfresco-annotations
 report_id: 155b84b40e20968c40581a2a6230b3b7
 version: 0.1
 repo_type: Public
-timestamp: '2023-12-25T20:40:21+00:00'
+timestamp: '2024-01-05T08:15:26+00:00'
 requested_by: andreacomo
 provider: github
 branch: master
@@ -17,6 +17,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Languages
   image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/andreacomo/alfresco-annotations
   detection_source: Repo Metadata
 - name: Apache FreeMarker
   description: A free Java-based template engine
@@ -27,6 +28,7 @@ tools:
   category: Languages & Frameworks
   sub_category: Java Tools
   image_url: https://img.stackshare.io/service/4456/ymCgaIO0_400x400.jpg
+  detection_source_url: https://github.com/andreacomo/alfresco-annotations
   detection_source: Repo Metadata
 - name: Git
   description: Fast, scalable, distributed revision control system
@@ -36,6 +38,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/andreacomo/alfresco-annotations
   detection_source: Repo Metadata
 - name: JUnit
   description: A programmer-oriented testing framework for Java
@@ -60,6 +63,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Testing Frameworks
   image_url: https://img.stackshare.io/service/2021/4y634TJm_400x400.jpg
+  detection_source_url: https://github.com/andreacomo/alfresco-annotations/blob/master/pom.xml
   detection_source: pom.xml
   last_updated_by: acomo_omnia
   last_updated_on: 2016-01-28 12:50:42.000000000 Z
@@ -72,6 +76,7 @@ tools:
   category: Build, Test, Deploy
   sub_category: Continuous Integration
   image_url: https://img.stackshare.io/service/460/Lu6cGu0z_400x400.png
+  detection_source_url: https://github.com/andreacomo/alfresco-annotations/blob/master/.travis.yml
   detection_source: ".travis.yml"
   last_updated_by: andrea.como
   last_updated_on: 2016-04-05 22:18:39.000000000 Z
