@@ -4,9 +4,9 @@
 andreacomo/alfresco-annotations is built on the following main stack:
 
 - [Java](https://www.java.com) – Languages
+- [Apache FreeMarker](http://freemarker.incubator.apache.org/index.html) – Java Tools
 - [JUnit](http://junit.org/) – Testing Frameworks
 - [Mockito](https://site.mockito.org/) – Testing Frameworks
-- [Apache FreeMarker](http://freemarker.incubator.apache.org/index.html) – Java Tools
 - [Travis CI](http://travis-ci.com/) – Continuous Integration
 
 Full tech stack [here](/techstack.md)
@@ -18,9 +18,9 @@ Full tech stack [here](/techstack.md)
 andreacomo/alfresco-annotations is built on the following main stack:
 
 - <img width='25' height='25' src='https://img.stackshare.io/service/995/K85ZWV2F.png' alt='Java'/> [Java](https://www.java.com) – Languages
+- <img width='25' height='25' src='https://img.stackshare.io/service/4456/ymCgaIO0_400x400.jpg' alt='Apache FreeMarker'/> [Apache FreeMarker](http://freemarker.incubator.apache.org/index.html) – Java Tools
 - <img width='25' height='25' src='https://img.stackshare.io/service/2020/874086.png' alt='JUnit'/> [JUnit](http://junit.org/) – Testing Frameworks
 - <img width='25' height='25' src='https://img.stackshare.io/service/2021/4y634TJm_400x400.jpg' alt='Mockito'/> [Mockito](https://site.mockito.org/) – Testing Frameworks
-- <img width='25' height='25' src='https://img.stackshare.io/service/4456/ymCgaIO0_400x400.jpg' alt='Apache FreeMarker'/> [Apache FreeMarker](http://freemarker.incubator.apache.org/index.html) – Java Tools
 - <img width='25' height='25' src='https://img.stackshare.io/service/460/Lu6cGu0z_400x400.png' alt='Travis CI'/> [Travis CI](http://travis-ci.com/) – Continuous Integration
 
 Full tech stack [here](/techstack.md)
@@ -32,7 +32,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [andreacomo/alfresco-annotations](https://github.com/andreacomo/alfresco-annotations)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|8<br/>Tools used|01/05/24 <br/>Report generated|
+|8<br/>Tools used|02/29/24 <br/>Report generated|
 |------|------|
 </div>
 
